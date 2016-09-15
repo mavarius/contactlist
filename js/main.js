@@ -16,6 +16,7 @@
 // declare global variables
 let $contactForm, $saveContact, $cancelForm, $close, $contactList, $cfName, $cfPhone, $cfEmail, $cfAddress, $cfAvatar;
 let currID = null;
+let allContacts = {};
 
 // document ready
 $(() => {
@@ -48,7 +49,7 @@ function saveContact(event) {
   let address = $cfAddress.val();
   let avatar = $cfAvatar.val();
   if (avatar == '') {
-    avatar = 'http://lorempixel.com/50/50/cats';
+    avatar = `https://api.adorable.io/avatars/50/${Math.floor(Math.random() * 5000)}`;
   }
 
   clearForm();
@@ -59,9 +60,20 @@ function saveContact(event) {
     $contactList.append($row);
     let date = new Date().valueOf().toString();
     $row.attr('id', date);
+    currID = $row.attr('id');
   } else {
     $contactList.find(`#${currID}`).replaceWith($row);
   }
+
+  allContacts[currID] = {
+    'ID' : currID,
+    'name' : name,
+    'phone' : phone,
+    'email' : email,
+    'address' : address,
+    'avatar' : avatar
+  }
+  console.log(allContacts);
 
   currID = null;
 }
