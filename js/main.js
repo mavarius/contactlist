@@ -47,6 +47,9 @@ function saveContact(event) {
   let email = $cfEmail.val();
   let address = $cfAddress.val();
   let avatar = $cfAvatar.val();
+  if (avatar == '') {
+    avatar = 'http://lorempixel.com/50/50/cats';
+  }
 
   clearForm();
 
@@ -99,9 +102,7 @@ function contactTemplate(name, phone, email, address, avatar) {
   $row.children('.phone').text(phone);
   $row.children('.email').text(email);
   $row.children('.address').text(address);
-  if (avatar) {
-    $row.children('.avatar').children("img").attr('src', avatar);
-  }
+  $row.children('.avatar').children("img").attr('src', avatar);
 
   return $row;
 }
