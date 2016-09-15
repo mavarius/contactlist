@@ -99,7 +99,9 @@ function contactTemplate(name, phone, email, address, avatar) {
   $row.children('.phone').text(phone);
   $row.children('.email').text(email);
   $row.children('.address').text(address);
-  $row.children('.avatar').children("img").attr('src', avatar);
+  if (avatar) {
+    $row.children('.avatar').children("img").attr('src', avatar);
+  }
 
   return $row;
 }
