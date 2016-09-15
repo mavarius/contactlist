@@ -6,16 +6,17 @@
 // EXTRA FEATURES
   // DONE: user can view contact creation form in a modal seperate from the list view
   // DONE: user can view contact update form in a modal seperate from the list view
-  // TODO: user can add images to the contacts
+  // DONE: user can add images to the contacts
   // TODO: user can sort contacts by clicking on field headers
   // TODO: user can filter contacts with a search field
   // TODO: user can categorize contacts into groups and can filter by group
   // TODO: user only sees edit and delete options on hover
-  // TODO: user sees it prettified
+  // TODO: user can be wowed by beautiful UI
 
 // declare global variables
-let $contactForm, $saveContact, $cancelForm, $close, $contactList, $cfName, $cfPhone, $cfEmail, $cfAddress;
+let $contactForm, $saveContact, $cancelForm, $close, $contactList, $cfName, $cfPhone, $cfEmail, $cfAddress, $cfAvatar;
 let currID = null;
+
 // document ready
 $(() => {
   // initialize variables
@@ -28,6 +29,7 @@ $(() => {
   $cfPhone = $('#cfPhone');
   $cfEmail = $('#cfEmail');
   $cfAddress = $('#cfAddress');
+  $cfAvatar = $('#cfAvatar');
 
   $saveContact.click(saveContact);
   $cancelForm.click(clearForm);
@@ -44,10 +46,11 @@ function saveContact(event) {
   let phone = $cfPhone.val();
   let email = $cfEmail.val();
   let address = $cfAddress.val();
+  let avatar = $cfAvatar.val();
 
   clearForm();
 
-  let $row = contactTemplate(name, phone, email, address);
+  let $row = contactTemplate(name, phone, email, address, avatar);
 
   if (!currID) {
     $contactList.append($row);
@@ -68,11 +71,13 @@ function editContact(event) {
   let phone = $target.children('.phone').text();
   let email = $target.children('.email').text();
   let address = $target.children('.address').text();
+  let avatar = $target.children('.avatar').children("img").attr('src');
 
   $cfName.val(name);
   $cfPhone.val(phone);
   $cfEmail.val(email);
   $cfAddress.val(address);
+  $cfAvatar.val(avatar);
 
   currID = $target.attr('id');
 
@@ -87,13 +92,14 @@ function deleteContact(event) {
 }
 
 // clone template and fill with data
-function contactTemplate(name, phone, email, address) {
+function contactTemplate(name, phone, email, address, avatar) {
   let $row = $('#contactTemplate').clone();
 
   $row.children('.name').text(name);
   $row.children('.phone').text(phone);
   $row.children('.email').text(email);
   $row.children('.address').text(address);
+  $row.children('.avatar').children("img").attr('src', avatar);
 
   return $row;
 }
@@ -104,4 +110,5 @@ function clearForm() {
   $cfPhone.val('');
   $cfEmail.val('');
   $cfAddress.val('');
+  $cfAvatar.val('');
 }

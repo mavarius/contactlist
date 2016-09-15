@@ -8,6 +8,7 @@
   <!-- CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link href="css/main.css" rel="stylesheet">
   <!-- JS -->
   <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -56,6 +57,12 @@
                   <input type="text" class="form-control form-control-sm" id="cfAddress" placeholder="1407 Graymalkin Ln, North Salem, NY 10560">
                 </div>
               </div>
+              <div class="form-group row">
+                <label for="cfAvatar" class="col-xs-2 col-form-label">AVATAR</label>
+                <div class="col-xs-10">
+                  <input class="form-control" type="url" placeholder="http://image-url.com" id="cfAvatar">
+                </div>
+              </div>
             </form>
             <!-- FORM END -->
           </div>
@@ -71,6 +78,7 @@
       <table class="table table-hover">
         <thead>
           <tr>
+            <th></th>
             <th><i class="fa fa-user" aria-hidden="true"></i> NAME</th>
             <th><i class="fa fa-phone" aria-hidden="true"></i> PHONE</th>
             <th><i class="fa fa-envelope" aria-hidden="true"></i> EMAIL</th>
@@ -86,10 +94,11 @@
   </div>
   <table class="hidden">
     <tr id="contactTemplate">
-      <td class="name">Ororo Munroe</td>
-      <td class="phone">555-555-5555</td>
-      <td class="email">ororomunroe@x.com</td>
-      <td class="address">1407 Graymalkin Ln, North Salem, NY 10560</td>
+      <td class="avatar"><img src="" alt="avatar"></td>
+      <td class="name"></td>
+      <td class="phone"></td>
+      <td class="email"></td>
+      <td class="address"></td>
       <td><button type="button" class="editBtn btn btn-warning" data-toggle="modal" data-target="#newContactDialog"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
       <td><button type="button" class="deleteBtn btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
     </tr>
