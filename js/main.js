@@ -1,25 +1,26 @@
 // MVP
   // DONE: user can add contacts to the list
-  // TODO: user can update an existing contact on the list
-  // TODO: user can delete contacts from list
-  // TODO: user can easily understand UI
+  // DONE: user can update an existing contact on the list
+  // DONE: user can delete contacts from list
+  // DONE: user can easily understand UI
 // EXTRA FEATURES
   // DONE: user can view contact creation form in a modal seperate from the list view
-  // TODO: user can view contact update form in a modal seperate from the list view
+  // DONE: user can view contact update form in a modal seperate from the list view
   // TODO: user can add images to the contacts
   // TODO: user can sort contacts by clicking on field headers
   // TODO: user can filter contacts with a search field
   // TODO: user can categorize contacts into groups and can filter by group
   // TODO: user only sees edit and delete options on hover
+  // TODO: user sees it prettified
 
 // declare global variables
-let $contactForm, $addNewContact, $cancelForm, $close, $contactList, $cfName, $cfPhone, $cfEmail, $cfAddress;
-
+let $contactForm, $saveContact, $cancelForm, $close, $contactList, $cfName, $cfPhone, $cfEmail, $cfAddress;
+let currID = null;
 // document ready
 $(() => {
   // initialize variables
   $contactForm = $('#contactForm');
-  $addNewContact = $('#addNewContact');
+  $saveContact = $('#saveContact');
   $cancelForm = $('#cancelForm');
   $close = $('.close');
   $contactList = $('#contactList');
@@ -28,7 +29,7 @@ $(() => {
   $cfEmail = $('#cfEmail');
   $cfAddress = $('#cfAddress');
 
-  $addNewContact.click(addNewContact);
+  $saveContact.click(saveContact);
   $cancelForm.click(clearForm);
   $close.click(clearForm);
   $contactList.on('click', '.editBtn', editContact);
@@ -36,7 +37,7 @@ $(() => {
 })
 
 // add contact handler
-function addNewContact(event) {
+function saveContact(event) {
   event.preventDefault();
 
   let name = $cfName.val();
@@ -47,17 +48,35 @@ function addNewContact(event) {
   clearForm();
 
   let $row = contactTemplate(name, phone, email, address);
-  $contactList.append($row);
+
+  if (!currID) {
+    $contactList.append($row);
+    let date = new Date().valueOf().toString();
+    $row.attr('id', date);
+  } else {
+    $contactList.find(`#${currID}`).replaceWith($row);
+  }
+
+  currID = null;
 }
 
 // edit contact handler
 function editContact(event) {
-  let $target = $(event.target);
+  let $target = $(event.target).closest("tr");
 
-  console.log($target.closest("tr").children('.name').text());
-  console.log($target.closest("tr").children('.phone').text());
-  console.log($target.closest("tr").children('.email').text());
-  console.log($target.closest("tr").children('.address').text());
+  let name = $target.children('.name').text();
+  let phone = $target.children('.phone').text();
+  let email = $target.children('.email').text();
+  let address = $target.children('.address').text();
+
+  $cfName.val(name);
+  $cfPhone.val(phone);
+  $cfEmail.val(email);
+  $cfAddress.val(address);
+
+  currID = $target.attr('id');
+
+  return currID;
 }
 
 // delete contact handler
