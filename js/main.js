@@ -56,15 +56,6 @@ function saveContact(event) {
 
   let $row = contactTemplate(name, phone, email, address, avatar);
 
-  if (!currID) {
-    $contactList.append($row);
-    let date = new Date().valueOf().toString();
-    $row.attr('id', date);
-    currID = $row.attr('id');
-  } else {
-    $contactList.find(`#${currID}`).replaceWith($row);
-  }
-
   allContacts[currID] = {
     'ID' : currID,
     'name' : name,
@@ -73,20 +64,20 @@ function saveContact(event) {
     'address' : address,
     'avatar' : avatar
   }
-  console.log(allContacts);
 
   currID = null;
+  return currID;
 }
 
 // edit contact handler
 function editContact(event) {
-  let $target = $(event.target).closest("tr");
+  currID = $(event.target).closest("tr").attr('id');
 
-  let name = $target.children('.name').text();
-  let phone = $target.children('.phone').text();
-  let email = $target.children('.email').text();
-  let address = $target.children('.address').text();
-  let avatar = $target.children('.avatar').children("img").attr('src');
+  let name = allContacts[currID].name.valueOf();
+  let phone = allContacts[currID].phone.valueOf();
+  let email = allContacts[currID].email.valueOf();
+  let address = allContacts[currID].address.valueOf();
+  let avatar = allContacts[currID].avatar.valueOf();
 
   $cfName.val(name);
   $cfPhone.val(phone);
@@ -94,16 +85,18 @@ function editContact(event) {
   $cfAddress.val(address);
   $cfAvatar.val(avatar);
 
-  currID = $target.attr('id');
-
   return currID;
 }
 
 // delete contact handler
 function deleteContact(event) {
-  let $target = $(event.target);
+  let $target = $(event.target).closest("tr");
+  $target.remove();
 
-  $target.closest("tr").remove();
+  currID = $target.attr('id');
+  delete allContacts[currID];
+  currID = null;
+  return currID;
 }
 
 // clone template and fill with data
@@ -115,6 +108,16 @@ function contactTemplate(name, phone, email, address, avatar) {
   $row.children('.email').text(email);
   $row.children('.address').text(address);
   $row.children('.avatar').children("img").attr('src', avatar);
+  $row.attr('id', currID);
+
+  if (currID === null) {
+    $contactList.append($row);
+    let date = new Date().valueOf().toString();
+    $row.attr('id', date);
+    currID = $row.attr('id');
+  } else {
+    $contactList.find(`#${currID}`).replaceWith($row);
+  }
 
   return $row;
 }
